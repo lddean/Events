@@ -131,6 +131,29 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 time1.show();
                 break;
 
+            case R.id.choose:
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                builder.setTitle("Choose");
+                builder.setIcon(android.R.drawable.ic_dialog_info);
+                final String[] r = {"Every Year", "Every Month", "Every Week", "None"};
+                builder.setSingleChoiceItems(r, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which){
+                        Task_repeat = r[which];
+                        ShowRepeat(Task_repeat);
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Task_repeat = "None";
+                        ShowRepeat(Task_repeat);
+                        dialog.dismiss();
+                    }
+                });
+                builder.show();
+                break;
 
             case R.id.button1:
                 but1.setOnClickListener(new Button.OnClickListener(){
@@ -139,6 +162,8 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                     public void onClick(View v) {
                         EditText text = (EditText) findViewById(R.id.editText1);
                         String task = text.getText().toString();
+                        EditText text2 = (EditText) findViewById(R.id.enter_event_description);
+                        String description = text2.getText().toString();
                         helper = new TaskDBHelper(SettingActivity.this);
                         SQLiteDatabase db = helper.getWritableDatabase();
                         ContentValues values = new ContentValues();
@@ -163,8 +188,24 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                         }
                         ContentValues event = new ContentValues();
                         event.put("title", task);
-                        event.put("description", "    ");
+                        event.put("description", description);
                         event.put("calendar_id",calId);
+                        if (Task_repeat.equals("Every Year")){
+                            event.put("rrule", "FREQ=YEARLY");
+                        }
+                        else if (Task_repeat.equals("Every Month")){
+                            event.put("rrule", "FREQ=MONTHLY");
+                        }
+                        else if (Task_repeat.equals("Every Week")){
+                            event.put("rrule", "FREQ=WEEKLY");
+                        }
+                        else if (Task_repeat.equals("Every day")){
+                            event.put("rrule", "FREQ=DAILY");
+                        }
+                        else if (Task_repeat.equals("None")){
+                        }
+
+
 
                         Calendar mCalendar = Calendar.getInstance();
                         mCalendar.set(Task_year,Task_month - 1,Task_day);
@@ -198,7 +239,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 });
                 break;
             case R.id.button2:
-                but2.setOnClickListener(new Button.OnClickListener(){
+                but2.setOnClickListener(new Button.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
@@ -208,29 +249,6 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                     }
 
                 });
-                break;
-            case R.id.choose:
-                AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
-                builder.setTitle("Choose");
-                builder.setIcon(android.R.drawable.ic_dialog_info);
-                final String[] r = {"Every Year", "Every Month", "Every Week", "None"};
-                builder.setSingleChoiceItems(r, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which){
-                        Task_repeat = r[which];
-                        ShowRepeat(Task_repeat);
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Task_repeat = "None";
-                        ShowRepeat(Task_repeat);
-                        dialog.dismiss();
-                    }
-                });
-                builder.show();
                 break;
 
             default:
