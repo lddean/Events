@@ -14,24 +14,29 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_add_task=0x7f060011;
-        public static final int action_add_user=0x7f060012;
+        public static final int action_add_task=0x7f060016;
+        public static final int action_add_user=0x7f060017;
         public static final int btnDatePickerDialog=0x7f060004;
-        public static final int button=0x7f06000c;
-        public static final int button1=0x7f06000a;
-        public static final int button2=0x7f06000b;
-        public static final int calculated=0x7f060010;
-        public static final int choose=0x7f060008;
-        public static final int doneButton=0x7f06000e;
+        public static final int btnTimePickerDialog1=0x7f060007;
+        public static final int btnTimePickerDialog2=0x7f06000a;
+        public static final int button1=0x7f060010;
+        public static final int button2=0x7f060011;
+        public static final int calculated=0x7f060015;
+        public static final int choose=0x7f06000e;
+        public static final int doneButton=0x7f060013;
         public static final int editText1=0x7f060003;
-        public static final int info=0x7f06000f;
+        public static final int info=0x7f060014;
         public static final int readEventButton=0x7f060001;
         public static final int readUserButton=0x7f060000;
-        public static final int repeat=0x7f060007;
+        public static final int repeat=0x7f06000d;
         public static final int show=0x7f060006;
-        public static final int tableRow2=0x7f060009;
-        public static final int taskTextView=0x7f06000d;
+        public static final int show2=0x7f060009;
+        public static final int show3=0x7f06000c;
+        public static final int tableRow2=0x7f06000f;
+        public static final int taskTextView=0x7f060012;
         public static final int textView=0x7f060005;
+        public static final int textView2=0x7f060008;
+        public static final int textView3=0x7f06000b;
         public static final int writeEventButton=0x7f060002;
     }
     public static final class layout {

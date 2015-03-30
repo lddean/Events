@@ -28,7 +28,9 @@ import android.content.ContentValues;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.text.format.Time;
-
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
+import android.widget.TimePicker;
 
 import static com.example.TodoList.db.TaskContract.*;
 
@@ -39,8 +41,12 @@ public class SettingActivity extends Activity implements View.OnClickListener {
     private int Task_year;
     private int Task_month;
     private int Task_day;
+    private int start_hours;
+    private int start_min;
+    private int end_hours;
+    private int end_min;
     private String Task_repeat;
-    private Button btnDate,but1,but2,but3;
+    private Button btnDate,but1,but2,buttime1,buttime2;
     private boolean condition = false;
     //private TextView t;
 
@@ -60,18 +66,25 @@ public class SettingActivity extends Activity implements View.OnClickListener {
 
         but2 = (Button) findViewById(R.id.button2);
         but2 = (Button) findViewById(R.id.choose);
-
+        buttime1 = (Button) findViewById(R.id.btnTimePickerDialog1);
+        buttime1.setOnClickListener(this);
+        buttime2 = (Button) findViewById(R.id.btnTimePickerDialog2);
+        buttime2.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        int y,m,d,h,min,s;
+        Calendar cal=Calendar.getInstance();
+        y = cal.get(Calendar.YEAR);
+        m = cal.get(Calendar.MONTH);
+        d = cal.get(Calendar.DATE);
+        h = cal.get(Calendar.HOUR_OF_DAY);
+        min = cal.get(Calendar.MINUTE);
         switch (v.getId()) {
             case R.id.btnDatePickerDialog:
-                int y,m,d;
-                Calendar cal=Calendar.getInstance();
-                y = cal.get(Calendar.YEAR);
-                m = cal.get(Calendar.MONTH);
-                d = cal.get(Calendar.DATE);
+
+
                 DatePickerDialog datePicker=new DatePickerDialog(SettingActivity.this, new OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -89,6 +102,35 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 datePicker.show();
 
                 break;
+            case R.id.btnTimePickerDialog1:
+                TimePickerDialog time = new TimePickerDialog(SettingActivity.this, new OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(SettingActivity.this, hourOfDay+"hour "+minute+"minute", Toast.LENGTH_SHORT).show();
+                        start_hours = hourOfDay;
+                        start_min = minute;
+                        showstarttime(start_hours,start_min);
+                    }
+                }, h, min, true);
+                time.show();
+                break;
+            case R.id.btnTimePickerDialog2:
+                TimePickerDialog time1 =new TimePickerDialog(SettingActivity.this, new OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        // TODO Auto-generated method stub
+                        Toast.makeText(SettingActivity.this, hourOfDay+"hour "+minute+"minute", Toast.LENGTH_SHORT).show();
+                        end_hours = hourOfDay;
+                        end_min = minute;
+                        showendtime(end_hours, end_min);
+                    }
+                }, h, min, true);
+                time1.show();
+                break;
+
 
             case R.id.button1:
                 but1.setOnClickListener(new Button.OnClickListener(){
@@ -126,9 +168,11 @@ public class SettingActivity extends Activity implements View.OnClickListener {
 
                         Calendar mCalendar = Calendar.getInstance();
                         mCalendar.set(Task_year,Task_month - 1,Task_day);
-                        mCalendar.set(Calendar.HOUR_OF_DAY,10);
+                        mCalendar.set(Calendar.HOUR_OF_DAY,start_hours);
+                        mCalendar.set(Calendar.MINUTE,start_min);
                         long start = mCalendar.getTime().getTime();
-                        mCalendar.set(Calendar.HOUR_OF_DAY,11);
+                        mCalendar.set(Calendar.HOUR_OF_DAY,end_hours);
+                        mCalendar.set(Calendar.MINUTE,end_min);
                         long end = mCalendar.getTime().getTime();
 
                         event.put("dtstart", start);
@@ -193,6 +237,16 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 return;
         }
 
+    }
+
+    private void showendtime(int end_hours, int end_min) {
+        TextView show=(TextView)findViewById(R.id.show3);
+        show.setText(""+end_hours+":"+ end_min +".");
+    }
+
+    private void showstarttime(int start_hours, int start_min) {
+        TextView show=(TextView)findViewById(R.id.show2);
+        show.setText(""+start_hours+":"+ start_min +".");
     }
 
     private void ShowRepeat(String task_repeat) {
