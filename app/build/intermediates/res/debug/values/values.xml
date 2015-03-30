@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/lddean/Documents/todoList_date/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">TodoList</string>
+    <string name="title_activity_search_user">SearchUserActivity</string>
+</resources>
